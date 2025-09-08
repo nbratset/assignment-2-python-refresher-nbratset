@@ -1,2 +1,30 @@
 def get_column(file_name, query_column, query_value, result_column):
-    return None
+    '''Reads a CSV file and finds lines with a given value in a given column. Returns value of speficied column as an array.
+    
+    Parameters
+    ----------
+    file_name : csv file name
+
+    query_column : Column name to filter by
+
+    query_value : Value within specified query_column to filter by
+
+    result_column : Column name to get result values from
+
+    Returns 
+    -------
+    result_array :  List of values from result_column where query_column contains the query_value
+    
+    '''
+    f = open(file_name, 'r')
+    column_header = f.readline()                         # reads first line to get column headers
+    column_index = column_header.index(query_column)     # finds column index from query_column value
+    value_index = column_header.index(result_column)     # finds column index for the result_column value
+    
+    result_array = []
+    for line in f:                                       # iterrates over all lines in csv
+        line_array = line.rstrip().split(',')            # splits line into an array
+        if line_array[column_index] == query_value:      # checks for query_value in the query_column
+            result_array.append(line_array[value_index]) # appends value if conditions are met to an array
+    f.close()
+    return result_array
